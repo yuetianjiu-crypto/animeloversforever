@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫社交平台 - 全球访问</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="assets/index-Bmg9OfA4.css">
+    <meta name="description" content="全球动漫爱好者社交平台">
+    <meta name="theme-color" content="#8B5CF6">
+    
+    <!-- PWA 配置 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="动漫社交">
+    
+    <!-- Open Graph 标签 -->
+    <meta property="og:title" content="动漫社交平台">
+    <meta property="og:description" content="全球动漫爱好者社交平台">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/8B5CF6/FFFFFF?text=动漫社交">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="assets/index-DhChlhLe.js" as="script">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="assets/index-DhChlhLe.js"></script>
+    
+    <!-- 全局访问提示 -->
+    <script>
+        // 检测是否为移动设备
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+        
+        // 显示全球访问欢迎信息
+        console.log('🌐 全球动漫社交平台已加载');
+        console.log('📱 支持PWA安装，可在手机主屏幕添加应用');
+        console.log('🚀 全球任何地区均可访问');
+    </script>
+</body>
+</html>

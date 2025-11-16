@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Diagnostic</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #f5f5f5; }
+        .log { background: white; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Deployment Diagnostic Tool</h1>
+    <div id="logs"></div>
+    
+    <script>
+        const logs = [];
+        const logDiv = document.getElementById('logs');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toISOString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logs.push({ message: logEntry, type });
+            
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = logEntry;
+            logDiv.appendChild(div);
+        }
+        
+        async function runDiagnostic() {
+            log('Starting deployment diagnostic...', 'info');
+            
+            // Test 1: Basic page load
+            log('Test 1: Basic page load - SUCCESS', 'success');
+            
+            // Test 2: Check environment
+            try {
+                const env = window.import?.meta?.env || {};
+                log(`Test 2: Environment check - ${JSON.stringify(env)}`, 'info');
+            } catch (e) {
+                log(`Test 2: Environment check failed - ${e.message}`, 'error');
+            }
+            
+            // Test 3: Test fetch to root
+            try {
+                const response = await fetch('/');
+                log(`Test 3: Root fetch - Status: ${response.status}, OK: ${response.ok}`, response.ok ? 'success' : 'error');
+            } catch (e) {
+                log(`Test 3: Root fetch failed - ${e.message}`, 'error');
+            }
+            
+            // Test 4: Check for common issues
+            log('Test 4: Checking for common deployment issues...', 'info');
+            
+            // Check if we're in an iframe (common cause of ERR_ABORTED)
+            if (window.self !== window.top) {
+                log('Warning: Page is loaded in an iframe', 'warning');
+            }
+            
+            // Check protocol
+            log(`Protocol: ${window.location.protocol}`, 'info');
+            log(`Host: ${window.location.host}`, 'info');
+            log(`Pathname: ${window.location.pathname}`, 'info');
+            
+            log('Diagnostic complete. Check the logs above for issues.', 'info');
+        }
+        
+        // Run diagnostic after page load
+        window.addEventListener('load', runDiagnostic);
+        
+        // Also log any network errors
+        window.addEventListener('error', (e) => {
+            log(`Global error: ${e.message}`, 'error');
+        });
+    </script>
+</body>
+</html>

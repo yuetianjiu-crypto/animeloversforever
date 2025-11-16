@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二次元小窝 - 稳定访问</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+        .info {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #0c5460;
+            border: 2px solid #17a2b8;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .feature {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.2s ease;
+        }
+        .feature:hover {
+            transform: translateY(-2px);
+        }
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+        .debug {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #666;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .connection-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .connected {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .connecting {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status connecting" id="connectionStatus">
+        🔄 连接中...
+    </div>
+    
+    <div class="container">
+        <div class="logo">🏠</div>
+        <h1>二次元小窝</h1>
+        <p class="subtitle">您的专属动漫社交平台</p>
+        
+        <div class="status success" id="mainStatus">
+            ✅ 网页加载成功！<span class="loading-spinner" id="loadingSpinner" style="display: none;"></span>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div>移动端优化</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div>精美界面</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div>快速加载</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <div>安全可靠</div>
+            </div>
+        </div>
+        
+        <div style="margin: 30px 0;">
+            <button class="btn" onclick="enterApp()">🏠 进入主页</button>
+            <button class="btn" onclick="testConnection()">🧪 测试连接</button>
+            <button class="btn" onclick="showDebugInfo()">🔍 调试信息</button>
+        </div>
+        
+        <div class="debug" id="debugInfo" style="display: none;">
+            <strong>系统信息:</strong><br>
+            加载时间: <span id="loadTime"></span><br>
+            用户代理: <span id="userAgent"></span><br>
+            当前URL: <span id="currentUrl"></span><br>
+            屏幕尺寸: <span id="screenSize"></span><br>
+            连接状态: <span id="connStatus">检测中...</span>
+        </div>
+    </div>
+
+    <script>
+        // 系统检测函数
+        function runSystemCheck() {
+            const statusEl = document.getElementById('connectionStatus');
+            const connStatusEl = document.getElementById('connStatus');
+            
+            // 基本连接测试
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    statusEl.className = 'connection-status connected';
+                    statusEl.textContent = '✅ 已连接';
+                    connStatusEl.textContent = '在线';
+                } else {
+                    statusEl.className = 'connection-status';
+                    statusEl.textContent = '❌ 离线';
+                    connStatusEl.textContent = '离线';
+                }
+            }, 1000);
+            
+            // 显示基础信息
+            document.getElementById('loadTime').textContent = new Date().toLocaleString('zh-CN');
+            document.getElementById('userAgent').textContent = navigator.userAgent.substring(0, 60) + '...';
+            document.getElementById('currentUrl').textContent = window.location.href;
+            document.getElementById('screenSize').textContent = `${window.innerWidth} x ${window.innerHeight}`;
+        }
+        
+        // 进入应用
+        function enterApp() {
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.display = 'inline-block';
+            
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1000);
+        }
+        
+        // 测试连接
+        function testConnection() {
+            const mainStatus = document.getElementById('mainStatus');
+            mainStatus.innerHTML = '🔄 正在测试连接...<span class="loading-spinner"></span>';
+            
+            // 测试多个端点
+            const tests = [
+                { url: '/manifest.json', name: '应用清单' },
+                { url: '/favicon.ico', name: '网站图标' },
+                { url: '/diagnostic.html', name: '诊断工具' }
+            ];
+            
+            let completed = 0;
+            let successful = 0;
+            
+            tests.forEach(test => {
+                fetch(test.url, { method: 'HEAD' })
+                    .then(response => {
+                        completed++;
+                        if (response.ok) {
+                            successful++;
+                            console.log(`✅ ${test.name} 可访问`);
+                        } else {
+                            console.warn(`⚠️ ${test.name} 返回 ${response.status}`);
+                        }
+                        
+                        if (completed === tests.length) {
+                            updateTestResults(successful, tests.length);
+                        }
+                    })
+                    .catch(error => {
+                        completed++;
+                        console.error(`❌ ${test.name} 失败:`, error);
+                        
+                        if (completed === tests.length) {
+                            updateTestResults(successful, tests.length);
+                        }
+                    });
+            });
+        }
+        
+        // 更新测试结果
+        function updateTestResults(successful, total) {
+            const mainStatus = document.getElementById('mainStatus');
+            const percentage = Math.round((successful / total) * 100);
+            
+            if (percentage === 100) {
+                mainStatus.innerHTML = '✅ 所有连接测试通过！';
+            } else if (percentage >= 50) {
+                mainStatus.innerHTML = `⚠️ 部分连接可用 (${percentage}%)`;
+            } else {
+                mainStatus.innerHTML = `❌ 连接测试失败 (${percentage}%)`;
+            }
+        }
+        
+        // 显示调试信息
+        function showDebugInfo() {
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.style.display = debugInfo.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // 页面加载完成后运行检测
+        window.addEventListener('load', () => {
+            runSystemCheck();
+            
+            // 额外的网络检测
+            setTimeout(() => {
+                testConnection();
+            }, 2000);
+        });
+        
+        // 监听网络状态变化
+        window.addEventListener('online', () => {
+            document.getElementById('connectionStatus').className = 'connection-status connected';
+            document.getElementById('connectionStatus').textContent = '✅ 已连接';
+        });
+        
+        window.addEventListener('offline', () => {
+            document.getElementById('connectionStatus').className = 'connection-status';
+            document.getElementById('connectionStatus').textContent = '❌ 离线';
+        });
+    </script>
+</body>
+</html>
