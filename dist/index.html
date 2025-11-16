@@ -1,12 +1,92 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Trae Project</title>
-    <script type="module" crossorigin src="/assets/index-DhChlhLe.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Bmg9OfA4.css">
+    <title>动漫社交平台 - 全球可安装的动漫社交应用</title>
+    
+    <!-- PWA相关配置 - 全球优化 -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#ff6b9d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="动漫社交" />
+    <link rel="apple-touch-icon" href="/icons/app-icon-192.svg" />
+    
+    <!-- 应用描述和关键词 - 全球SEO优化 -->
+    <meta name="description" content="全球可安装的动漫社交平台 - 分享二次元生活，发现同好，随时随地离线使用。支持iOS、Android、桌面全平台安装。" />
+    <meta name="keywords" content="动漫,二次元,社交,ACG,动漫社区,PWA,可安装应用,离线使用,全球访问" />
+    <meta name="author" content="动漫社交平台" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://anime-social-app.vercel.app/" />
+    <meta property="og:title" content="动漫社交平台 - 全球可安装的动漫社交应用" />
+    <meta property="og:description" content="全球可安装的动漫社交平台 - 分享二次元生活，发现同好，随时随地离线使用。支持iOS、Android、桌面全平台安装。" />
+    <meta property="og:image" content="https://anime-social-app.vercel.app/icons/app-icon-512.svg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://anime-social-app.vercel.app/" />
+    <meta property="twitter:title" content="动漫社交平台 - 全球可安装的动漫社交应用" />
+    <meta property="twitter:description" content="全球可安装的动漫社交平台 - 分享二次元生活，发现同好，随时随地离线使用。支持iOS、Android、桌面全平台安装。" />
+    <meta property="twitter:image" content="https://anime-social-app.vercel.app/icons/app-icon-512.svg" />
+    
+    <!-- 防止缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- iOS启动画面 -->
+    <link rel="apple-touch-startup-image" href="/icons/app-icon-512.svg" />
+    
+    <!-- 全局CDN资源预加载 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Service Worker注册 -->
+    <script>
+      // 立即注册Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('[PWA] ServiceWorker注册成功:', registration.scope);
+              
+              // 检查更新
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('[PWA] 发现新版本');
+                    // 可以在这里提示用户刷新页面
+                  }
+                });
+              });
+            })
+            .catch(function(error) {
+              console.log('[PWA] ServiceWorker注册失败:', error);
+            });
+        });
+      }
+      
+      // PWA安装支持检测
+      window.addEventListener('beforeinstallprompt', function(e) {
+        console.log('[PWA] 安装提示可用');
+        e.preventDefault();
+        window.deferredPrompt = e;
+      });
+      
+      // 应用安装成功
+      window.addEventListener('appinstalled', function() {
+        console.log('[PWA] 应用已安装');
+      });
+    </script>
+    
+    <!-- PWA安装助手 -->
+    <script src="/install.js" defer></script>
+    
+    <script type="module" crossorigin src="/assets/index-2YxmSGYG.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D0DJYNdB.css">
   </head>
   <body>
     <div id="root"></div>

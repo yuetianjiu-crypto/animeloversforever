@@ -1,0 +1,42 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b9d;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c44569;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9b59b6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 动漫角色剪影 -->
+    <mask id="characterMask">
+      <rect width="192" height="192" fill="white"/>
+      <!-- 简单的动漫角色轮廓 -->
+      <circle cx="96" cy="60" r="25" fill="black"/>
+      <!-- 头发 -->
+      <path d="M71 60 Q96 35 121 60" fill="black"/>
+      <!-- 身体 -->
+      <rect x="76" y="85" width="40" height="50" rx="20" fill="black"/>
+      <!-- 手臂 -->
+      <rect x="61" y="95" width="15" height="30" rx="7.5" fill="black"/>
+      <rect x="116" y="95" width="15" height="30" rx="7.5" fill="black"/>
+      <!-- 腿部 -->
+      <rect x="81" y="135" width="15" height="30" rx="7.5" fill="black"/>
+      <rect x="96" y="135" width="15" height="30" rx="7.5" fill="black"/>
+    </mask>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="192" height="192" fill="url(#bgGradient)" rx="32"/>
+  
+  <!-- 角色剪影 -->
+  <rect width="192" height="192" fill="white" mask="url(#characterMask)" opacity="0.9"/>
+  
+  <!-- 装饰元素 -->
+  <circle cx="30" cy="30" r="8" fill="white" opacity="0.3"/>
+  <circle cx="162" cy="30" r="6" fill="white" opacity="0.2"/>
+  <circle cx="30" cy="162" r="5" fill="white" opacity="0.25"/>
+  <circle cx="162" cy="162" r="7" fill="white" opacity="0.15"/>
+  
+  <!-- 星星装饰 -->
+  <path d="M96 20 L98 26 L104 26 L99 30 L101 36 L96 32 L91 36 L93 30 L88 26 L94 26 Z" fill="white" opacity="0.6"/>
+</svg>

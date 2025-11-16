@@ -1,0 +1,46 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b9d;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c44569;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9b59b6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 动漫角色剪影 -->
+    <mask id="characterMask512">
+      <rect width="512" height="512" fill="white"/>
+      <!-- 简单的动漫角色轮廓 -->
+      <circle cx="256" cy="160" r="67" fill="black"/>
+      <!-- 头发 -->
+      <path d="M189 160 Q256 93 323 160" fill="black"/>
+      <!-- 身体 -->
+      <rect x="203" y="227" width="106" height="133" rx="53" fill="black"/>
+      <!-- 手臂 -->
+      <rect x="163" y="253" width="40" height="80" rx="20" fill="black"/>
+      <rect x="309" y="253" width="40" height="80" rx="20" fill="black"/>
+      <!-- 腿部 -->
+      <rect x="216" y="360" width="40" height="80" rx="20" fill="black"/>
+      <rect cx="256" cy="360" width="40" height="80" rx="20" fill="black"/>
+    </mask>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="512" height="512" fill="url(#bgGradient512)" rx="64"/>
+  
+  <!-- 角色剪影 -->
+  <rect width="512" height="512" fill="white" mask="url(#characterMask512)" opacity="0.9"/>
+  
+  <!-- 装饰元素 -->
+  <circle cx="80" cy="80" r="21" fill="white" opacity="0.3"/>
+  <circle cx="432" cy="80" r="16" fill="white" opacity="0.2"/>
+  <circle cx="80" cy="432" r="13" fill="white" opacity="0.25"/>
+  <circle cx="432" cy="432" r="19" fill="white" opacity="0.15"/>
+  
+  <!-- 星星装饰 -->
+  <path d="M256 53 L261 70 L278 70 L265 82 L270 99 L256 87 L242 99 L247 82 L234 70 L251 70 Z" fill="white" opacity="0.6"/>
+  
+  <!-- 小星星 -->
+  <path d="M128 128 L130 135 L137 135 L132 140 L134 147 L128 143 L122 147 L124 140 L119 135 L126 135 Z" fill="white" opacity="0.4"/>
+  <path d="M384 384 L386 391 L393 391 L388 396 L390 403 L384 399 L378 403 L380 396 L375 391 L382 391 Z" fill="white" opacity="0.4"/>
+</svg>

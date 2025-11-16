@@ -1,0 +1,57 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 - 粉色系 -->
+  <defs>
+    <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB3D9;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF8FB1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B9D;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 可爱的兔子角色 -->
+    <mask id="cuteBunnyMask">
+      <rect width="192" height="192" fill="white"/>
+      <!-- 兔子耳朵 -->
+      <ellipse cx="65" cy="45" rx="12" ry="25" fill="black" transform="rotate(-15 65 45)"/>
+      <ellipse cx="127" cy="45" rx="12" ry="25" fill="black" transform="rotate(15 127 45)"/>
+      <!-- 耳朵内部 -->
+      <ellipse cx="68" cy="45" rx="6" ry="15" fill="white" transform="rotate(-15 68 45)"/>
+      <ellipse cx="124" cy="45" rx="6" ry="15" fill="white" transform="rotate(15 124 45)"/>
+      <!-- 兔子头部 -->
+      <circle cx="96" cy="85" r="35" fill="black"/>
+      <!-- 兔子眼睛 -->
+      <circle cx="82" cy="80" r="4" fill="white"/>
+      <circle cx="110" cy="80" r="4" fill="white"/>
+      <!-- 兔子鼻子 -->
+      <ellipse cx="96" cy="92" rx="3" ry="2" fill="white"/>
+      <!-- 兔子嘴巴 -->
+      <path d="M88 98 Q96 105 104 98" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <!-- 兔子身体 -->
+      <ellipse cx="96" cy="130" rx="25" ry="20" fill="black"/>
+      <!-- 兔子前爪 -->
+      <circle cx="78" cy="140" r="6" fill="black"/>
+      <circle cx="114" cy="140" r="6" fill="black"/>
+    </mask>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="192" height="192" fill="url(#pinkGradient)" rx="32"/>
+  
+  <!-- 可爱的兔子角色 -->
+  <rect width="192" height="192" fill="white" mask="url(#cuteBunnyMask)"/>
+  
+  <!-- "Hi~" 文字 -->
+  <text x="96" y="170" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold" letter-spacing="2">
+    Hi~
+  </text>
+  
+  <!-- 装饰星星 -->
+  <path d="M30 30 L32 34 L36 34 L33 37 L34 41 L30 38.5 L26 41 L27 37 L24 34 L28 34 Z" fill="white" opacity="0.6"/>
+  <path d="M162 30 L164 34 L168 34 L165 37 L166 41 L162 38.5 L158 41 L159 37 L156 34 L160 34 Z" fill="white" opacity="0.6"/>
+  <path d="M96 20 L98 24 L102 24 L99 27 L100 31 L96 28.5 L92 31 L93 27 L90 24 L94 24 Z" fill="white" opacity="0.8"/>
+  
+  <!-- 小装饰点 -->
+  <circle cx="25" cy="25" r="3" fill="white" opacity="0.4"/>
+  <circle cx="167" cy="25" r="2" fill="white" opacity="0.3"/>
+  <circle cx="25" cy="167" r="2.5" fill="white" opacity="0.35"/>
+  <circle cx="167" cy="167" r="3.5" fill="white" opacity="0.25"/>
+</svg>
