@@ -1,9 +1,0 @@
-# Supabase配置
-# 请将这些信息添加到您的主机环境变量中，
-# 或者在index.html中直接配置
-
-VITE_SUPABASE_URL=https://nzksnfoxrzzkoppcehpe.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56a3NuZm94cnp6a29wcGNlaHBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwNzUsImV4cCI6MjA3ODYyMzA3NX0.VJAzcZ0yLa3DxE8lJOK1z20zMDegv7aKLS23cobOxSg
-
-# 注意：这些是公开的配置信息，用于前端连接
-# 请确保您的Supabase RLS策略已正确配置

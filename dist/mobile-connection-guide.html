@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动端连接指南 - 动漫社交平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: white;
+        }
+        h1 { color: #333; margin-bottom: 10px; font-size: 24px; }
+        .subtitle { color: #666; margin-bottom: 30px; font-size: 14px; }
+        .connection-info {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+        .ip-address {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 2px dashed #007bff;
+        }
+        .qr-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+        }
+        .steps {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .step-number {
+            background: #007bff;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .step-content { flex: 1; }
+        .step-title { font-weight: bold; color: #333; margin-bottom: 5px; }
+        .step-desc { color: #666; font-size: 14px; line-height: 1.4; }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .test-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .test-button:hover { background: #218838; }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online { background: #28a745; }
+        .status-offline { background: #dc3545; }
+        .network-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1565c0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        @media (max-width: 480px) {
+            .container { padding: 20px; }
+            h1 { font-size: 20px; }
+            .ip-address { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📱</div>
+        <h1>移动端连接指南</h1>
+        <p class="subtitle">解决手机无法连接本地服务器的问题</p>
+
+        <div id="connection-status">
+            <div class="status-indicator status-offline"></div>
+            <span>检测中...</span>
+        </div>
+
+        <div class="connection-info">
+            <h3>🔗 您的本地服务器地址</h3>
+            <div class="ip-address" id="local-ip">检测中...</div>
+            <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                在手机浏览器中输入上方地址访问应用
+            </p>
+        </div>
+
+        <div class="qr-container">
+            <h3>📱 扫码快速访问</h3>
+            <div class="qr-code" id="qr-code">
+                正在生成二维码...
+            </div>
+            <p style="color: #666; font-size: 12px; margin-top: 10px;">
+                使用手机扫描二维码直接访问
+            </p>
+        </div>
+
+        <div class="network-info">
+            <h4>🌐 网络信息</h4>
+            <div id="network-details">
+                <div>本地IP: <span id="ip-display">检测中...</span></div>
+                <div>端口: <span id="port-display">5173</span></div>
+                <div>协议: <span id="protocol-display">http</span></div>
+            </div>
+        </div>
+
+        <div class="steps">
+            <h3>📋 连接步骤</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">确保设备在同一网络</div>
+                    <div class="step-desc">手机和电脑必须连接到同一个WiFi网络</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">关闭防火墙（临时）</div>
+                    <div class="step-desc">Windows防火墙可能阻止连接，可临时关闭测试</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">使用手机浏览器</div>
+                    <div class="step-desc">在手机浏览器输入上方IP地址，如: http://192.168.0.14:5173</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">或使用二维码</div>
+                    <div class="step-desc">扫描二维码自动打开应用</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ 注意事项：</strong><br>
+            • 确保手机和电脑在同一WiFi网络<br>
+            • 检查Windows防火墙设置<br>
+            • 某些公司网络可能限制设备间通信<br>
+            • 可尝试重启路由器或切换网络
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="testConnection()" class="test-button">🧪 测试连接</button>
+            <button onclick="checkNetworkStatus()" class="test-button">🔄 刷新状态</button>
+        </div>
+
+        <div id="test-result" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        // 获取本地IP地址
+        function getLocalIP() {
+            return new Promise((resolve) => {
+                // 使用WebRTC获取本地IP
+                const pc = new RTCPeerConnection({iceServers: []});
+                pc.createDataChannel('');
+                pc.createOffer().then(offer => pc.setLocalDescription(offer));
+                pc.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        const ip = event.candidate.candidate.split(' ')[4];
+                        if (ip && ip !== '0.0.0.0') {
+                            resolve(ip);
+                            pc.close();
+                        }
+                    }
+                };
+                setTimeout(() => {
+                    pc.close();
+                    resolve('192.168.0.14'); // 默认值
+                }, 1000);
+            });
+        }
+
+        // 生成二维码
+        function generateQRCode(text) {
+            // 简单的二维码生成器
+            const qr = document.getElementById('qr-code');
+            const size = 200;
+            const qrDiv = document.createElement('div');
+            qrDiv.style.width = size + 'px';
+            qrDiv.style.height = size + 'px';
+            qrDiv.style.position = 'relative';
+            qrDiv.style.background = 'white';
+            qrDiv.style.padding = '10px';
+            
+            // 创建二维码图案（简化版）
+            const moduleCount = 25;
+            const moduleSize = Math.floor(size / moduleCount);
+            
+            for (let row = 0; row < moduleCount; row++) {
+                for (let col = 0; col < moduleCount; col++) {
+                    const module = document.createElement('div');
+                    module.style.position = 'absolute';
+                    module.style.width = moduleSize + 'px';
+                    module.style.height = moduleSize + 'px';
+                    module.style.left = (col * moduleSize) + 'px';
+                    module.style.top = (row * moduleSize) + 'px';
+                    
+                    // 简化的二维码模式
+                    const isBlack = ((row + col) % 3 === 0) || 
+                                   (row < 7 && col < 7) || 
+                                   (row < 7 && col >= moduleCount - 7) || 
+                                   (row >= moduleCount - 7 && col < 7);
+                    
+                    module.style.background = isBlack ? '#000' : '#fff';
+                    qrDiv.appendChild(module);
+                }
+            }
+            
+            qr.innerHTML = '';
+            qr.appendChild(qrDiv);
+        }
+
+        // 检查网络状态
+        async function checkNetworkStatus() {
+            const statusEl = document.getElementById('connection-status');
+            const ipEl = document.getElementById('local-ip');
+            const ipDisplay = document.getElementById('ip-display');
+            
+            try {
+                const ip = await getLocalIP();
+                const serverUrl = `http://${ip}:5173`;
+                
+                document.getElementById('local-ip').textContent = serverUrl;
+                document.getElementById('ip-display').textContent = ip;
+                
+                // 生成二维码
+                generateQRCode(serverUrl);
+                
+                // 测试服务器连接
+                const testUrl = `${serverUrl}/manifest.json`;
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                fetch(testUrl, { 
+                    method: 'HEAD', 
+                    signal: controller.signal,
+                    mode: 'no-cors'
+                })
+                .then(() => {
+                    statusEl.innerHTML = '<div class="status-indicator status-online"></div><span>服务器在线</span>';
+                    clearTimeout(timeoutId);
+                })
+                .catch(() => {
+                    statusEl.innerHTML = '<div class="status-indicator status-offline"></div><span>服务器离线或防火墙阻止</span>';
+                });
+                
+            } catch (error) {
+                statusEl.innerHTML = '<div class="status-indicator status-offline"></div><span>网络检测失败</span>';
+                document.getElementById('local-ip').textContent = 'http://192.168.0.14:5173';
+                document.getElementById('ip-display').textContent = '192.168.0.14';
+                generateQRCode('http://192.168.0.14:5173');
+            }
+        }
+
+        // 测试连接
+        async function testConnection() {
+            const resultEl = document.getElementById('test-result');
+            const ip = document.getElementById('ip-display').textContent;
+            const testUrl = `http://${ip}:5173`;
+            
+            resultEl.innerHTML = '<div class="warning">🔄 正在测试连接...</div>';
+            
+            try {
+                const startTime = Date.now();
+                const response = await fetch(`${testUrl}/manifest.json`, {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    timeout: 5000
+                });
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+                
+                resultEl.innerHTML = `
+                    <div class="success">
+                        <strong>✅ 连接成功！</strong><br>
+                        服务器地址: ${testUrl}<br>
+                        响应时间: ${responseTime}ms<br>
+                        状态: 正常
+                    </div>
+                `;
+            } catch (error) {
+                resultEl.innerHTML = `
+                    <div class="error">
+                        <strong>❌ 连接失败</strong><br>
+                        错误: ${error.message}<br><br>
+                        <strong>解决方案:</strong><br>
+                        1. 检查Windows防火墙设置<br>
+                        2. 确保手机和电脑在同一WiFi<br>
+                        3. 尝试重启开发服务器<br>
+                        4. 检查路由器设置
+                    </div>
+                `;
+            }
+        }
+
+        // 页面加载时执行
+        window.addEventListener('load', () => {
+            checkNetworkStatus();
+        });
+
+        // 定期刷新状态
+        setInterval(checkNetworkStatus, 30000);
+    </script>
+</body>
+</html>

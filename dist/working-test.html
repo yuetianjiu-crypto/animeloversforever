@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二次元小窝 - 测试页面</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .debug {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🏠</div>
+        <h1>二次元小窝</h1>
+        <div class="status success">
+            ✅ 网页加载成功！
+        </div>
+        <div class="status info">
+            📱 这是一个测试页面，确保您的应用可以正常访问
+        </div>
+        
+        <div style="margin: 30px 0;">
+            <a href="/" class="btn">🏠 主页</a>
+            <a href="/diagnostic.html" class="btn">🔍 诊断工具</a>
+        </div>
+        
+        <div class="debug">
+            <strong>调试信息:</strong><br>
+            加载时间: <span id="loadTime"></span><br>
+            用户代理: <span id="userAgent"></span><br>
+            当前URL: <span id="currentUrl"></span>
+        </div>
+    </div>
+
+    <script>
+        // 显示调试信息
+        document.getElementById('loadTime').textContent = new Date().toLocaleString('zh-CN');
+        document.getElementById('userAgent').textContent = navigator.userAgent.substring(0, 50) + '...';
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        // 检查是否可以正常访问其他资源
+        setTimeout(() => {
+            fetch('/manifest.json')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('✅ Manifest文件可访问');
+                    } else {
+                        console.warn('⚠️ Manifest文件访问失败');
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ 网络请求失败:', err);
+                });
+        }, 1000);
+    </script>
+</body>
+</html>
